@@ -456,6 +456,12 @@ class SubmitSLURM(SubmitPBS):
                 os.mkdir(log_dir)
             self.write_option(f, "--output="+os.path.join(log_dir, "%j.out"))
             self.write_option(f, "--error="+os.path.join(log_dir, "%j.err"))
+            try:
+                self.write_option(f, "--mail-user="+cluster_config['SubmitFile']['mail_user'])
+                self.write_option(f, "--mail-type="+cluster_config['SubmitFile']['mail_type'])
+            except KeyError:
+                pass
+
         else:
             self.write_option(f, "--output=/dev/null")
             self.write_option(f, "--error=/dev/null")
